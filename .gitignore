@@ -1,0 +1,23 @@
+# For idea
+**/out
+.idea
+*.iml
+*.ipr
+*.iws
+
+# For Gradle
+**/build
+build/**
+.gradle
+
+# For astah
+*.lock
+
+# For local
+temp
+
+# For mac
+.DS_Store
+
+classes
+.class
