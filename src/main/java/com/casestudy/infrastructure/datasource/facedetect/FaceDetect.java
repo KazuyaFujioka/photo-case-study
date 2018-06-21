@@ -11,13 +11,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
+import static org.bytedeco.javacpp.opencv_core.*;
 import static org.bytedeco.javacpp.opencv_imgcodecs.imwrite;
 import static org.bytedeco.javacpp.opencv_imgproc.rectangle;
 import static org.bytedeco.javacpp.opencv_objdetect.CascadeClassifier;
 import static org.bytedeco.javacpp.opencv_imgproc.COLOR_BGRA2GRAY;
 import static org.bytedeco.javacpp.opencv_imgproc.cvtColor;
-import static org.bytedeco.javacpp.opencv_core.RectVector;
-import static org.bytedeco.javacpp.opencv_core.Rect;
 
 class FaceDetect {
 
@@ -43,7 +42,17 @@ class FaceDetect {
         cvtColor(source, sourceGray, COLOR_BGRA2GRAY);
 
         // 顔認識実行
-        faceDetector.detectMultiScale(source, faceDetections);
+        double scaleFactor = 1.2;
+        int minNeighbors = 2;
+        int flags = 0;
+        Size minSize = new Size(50);
+        Size maxSize = new Size(50);
+        faceDetector.detectMultiScale(source, faceDetections,
+                scaleFactor,
+                minNeighbors,
+                flags,
+                minSize,
+                maxSize);
 
         if(!faceDetections.empty())
             response = FaceDetectResponse.success;
