@@ -19,7 +19,7 @@ class PhotoCaseStudySpec extends Specification {
 
     def "顔認識に成功する"() {
         setup:
-        File file = new File(this.getClass().getResource("/data/dummy/face/test3.jpg").getFile())
+        File file = new File(this.getClass().getResource("/data/dummy/face/test2.jpg").getFile())
         BufferedImage bufferedImage = ImageIO.read(file)
 
         // OpenCV使って画像の顔認証
