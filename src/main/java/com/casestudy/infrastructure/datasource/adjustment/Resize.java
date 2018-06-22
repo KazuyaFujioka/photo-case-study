@@ -2,7 +2,6 @@ package com.casestudy.infrastructure.datasource.adjustment;
 
 import com.casestudy.domain.model.adjustment.AdjustmentSize;
 import com.casestudy.domain.model.adjustment.AdjustmentStatus;
-import com.casestudy.domain.model.facedetect.FaceDetectResponse;
 import com.casestudy.infrastructure.datasource.Temporary;
 import com.casestudy.infrastructure.datasource.Workingplace;
 
