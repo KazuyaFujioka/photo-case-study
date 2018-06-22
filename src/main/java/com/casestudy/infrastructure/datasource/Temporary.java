@@ -11,8 +11,7 @@ import java.io.IOException;
 public class Temporary {
 
     static final String extension = "jpg";
-    public static final String fileName = "temporary" + System.currentTimeMillis() + "." + extension;
-    final File file = new File(Workingplace.directory.getPath() + File.separator + fileName);
+    final File file = new File(Workingplace.directory.getPath() + File.separator + fileName());
 
     BufferedImage bufferedImage;
 
@@ -36,6 +35,14 @@ public class Temporary {
         String photo = file.getPath();
         Mat source = imread(photo);
         return source;
+    }
+
+    public String path() {
+        return file.getPath();
+    }
+
+    public static String fileName() {
+        return new String("temporary" + System.currentTimeMillis() + "." + extension);
     }
 
     Temporary() {

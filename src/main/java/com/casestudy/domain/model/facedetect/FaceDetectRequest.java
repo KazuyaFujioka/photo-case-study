@@ -1,17 +1,19 @@
 package com.casestudy.domain.model.facedetect;
 
+import com.casestudy.domain.fundamental.Photo;
+
 import java.awt.image.BufferedImage;
 
 public class FaceDetectRequest {
 
-    BufferedImage photo;
+    Photo photo;
 
-    public FaceDetectRequest(BufferedImage photo) {
+    public FaceDetectRequest(Photo photo) {
         this.photo = photo;
     }
 
     public BufferedImage photo() {
-        return photo;
+        return photo.bufferedImage();
     }
 
     FaceDetectRequest() {

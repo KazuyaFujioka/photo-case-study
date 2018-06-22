@@ -47,7 +47,7 @@ class FaceDetect {
         int flags = 0;
         Size minSize = new Size(50);
         Size maxSize = new Size(50);
-        faceDetector.detectMultiScale(source, faceDetections,
+        faceDetector.detectMultiScale(sourceGray, faceDetections,
                 scaleFactor,
                 minNeighbors,
                 flags,
@@ -74,7 +74,7 @@ class FaceDetect {
         Workingplace debugging = Workingplace.forDebugging();
         debugging.create();
 
-        String file = Temporary.fileName;
+        String file = Temporary.fileName();
         LOG.info("debugging image=" + file);
         imwrite(debugging.path() + File.separator + file, source);
     }

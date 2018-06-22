@@ -29,18 +29,23 @@ class FaceDetectDataSource implements FaceDetectRepository {
         Temporary temporary = new Temporary(request.photo());
         temporary.write();
 
-        FaceDetect faceDetect = new FaceDetect(temporary, faceDetector);
-        faceDetect.detection();
+        try {
+            FaceDetect faceDetect = new FaceDetect(temporary, faceDetector);
+            faceDetect.detection();
 
-        FaceDetectResponse response = faceDetect.response();
-        if(response.isFailed())
-            LOG.warn("faces not detected!");
+            FaceDetectResponse response = faceDetect.response();
+            if (response.isFailed())
+                LOG.warn("faces not detected!");
 
-        if(debugging)
-            faceDetect.write();
+            if (debugging)
+                faceDetect.write();
 
-        temporary.remove();
-        return response;
+            return response;
+        } catch (Exception e) {
+            return FaceDetectResponse.failed;
+        } finally {
+            temporary.remove();
+        }
     }
 
     FaceDetectDataSource(CascadeClassifier faceDetector, @Value("${haarcascades.debugging:false}") Boolean debugging ) {
