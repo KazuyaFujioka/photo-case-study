@@ -1,5 +1,6 @@
 package com.casestudy.infrastructure.datasource.facedetect;
 
+import com.casestudy.application.exception.FaceDetectException;
 import com.casestudy.domain.model.facedetect.FaceDetectRepository;
 import com.casestudy.domain.model.facedetect.FaceDetectRequest;
 import com.casestudy.domain.model.facedetect.FaceDetectResponse;
@@ -18,10 +19,10 @@ import org.slf4j.LoggerFactory;
 @Repository
 class FaceDetectDataSource implements FaceDetectRepository {
 
+    Logger LOG = LoggerFactory.getLogger(FaceDetectDataSource.class);
+
     CascadeClassifier faceDetector;
     Boolean debugging;
-
-    Logger LOG = LoggerFactory.getLogger(FaceDetectDataSource.class);
 
     @Override
     public FaceDetectResponse detect(FaceDetectRequest request) {
@@ -42,7 +43,8 @@ class FaceDetectDataSource implements FaceDetectRepository {
 
             return response;
         } catch (Exception e) {
-            return FaceDetectResponse.failed;
+            LOG.error("face detect exception=" + e.getMessage());
+            throw new FaceDetectException(e);
         } finally {
             temporary.remove();
         }

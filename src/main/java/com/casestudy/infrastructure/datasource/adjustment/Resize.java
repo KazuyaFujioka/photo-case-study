@@ -1,7 +1,7 @@
 package com.casestudy.infrastructure.datasource.adjustment;
 
+import com.casestudy.domain.fundamental.Photo;
 import com.casestudy.domain.model.adjustment.AdjustmentSize;
-import com.casestudy.domain.model.adjustment.AdjustmentStatus;
 import com.casestudy.infrastructure.datasource.Temporary;
 import com.casestudy.infrastructure.datasource.Workingplace;
 
@@ -25,8 +25,6 @@ class Resize {
 
     Mat destination;
 
-    AdjustmentStatus status = AdjustmentStatus.failed;
-
     Resize(Mat source, AdjustmentSize size) {
         this.source = source;
         this.size = size;
@@ -46,7 +44,7 @@ class Resize {
         temporary.copyTo(roi);
     }
 
-    BufferedImage asImage() {
+    Photo asImage() {
         Workingplace debugging = Workingplace.forDebugging();
         debugging.create();
         File file = new File(debugging.path() + File.separator + Temporary.fileName());
@@ -55,13 +53,12 @@ class Resize {
         BufferedImage bufferedImage;
         try {
             bufferedImage = ImageIO.read(file);
-            status = AdjustmentStatus.success;
+            return new Photo(bufferedImage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
             file.deleteOnExit();
         }
-        return bufferedImage;
     }
 
     void write() {
@@ -69,9 +66,5 @@ class Resize {
         debugging.create();
         String file = Temporary.fileName();
         imwrite(debugging.path() + File.separator + file, destination);
-    }
-
-    AdjustmentStatus status() {
-        return status;
     }
 }

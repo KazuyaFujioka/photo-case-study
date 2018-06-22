@@ -1,26 +1,22 @@
 package com.casestudy.infrastructure.datasource.adjustment;
 
+import com.casestudy.application.exception.AdjustmentException;
 import com.casestudy.domain.model.adjustment.*;
 import com.casestudy.infrastructure.datasource.Temporary;
 import com.casestudy.infrastructure.datasource.Workingplace;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import org.bytedeco.javacpp.opencv_imgproc;
 import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_core.Size;
-
-import static org.bytedeco.javacpp.opencv_imgcodecs.imwrite;
-import static org.bytedeco.javacpp.opencv_core.*;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 
 @Repository
 class AdjustmentDataSource implements AdjustmentRepository {
+
+    Logger LOG = LoggerFactory.getLogger(AdjustmentDataSource.class);
 
     Boolean debugging;
 
@@ -41,9 +37,10 @@ class AdjustmentDataSource implements AdjustmentRepository {
             if (debugging)
                 resize.write();
 
-            return new AdjustmentResponse(resize.asImage(), resize.status);
+            return new AdjustmentResponse(resize.asImage());
         } catch (Exception e) {
-            return new AdjustmentResponse(AdjustmentStatus.failed);
+            LOG.error("adjustment exception=" + e.getMessage());
+            throw new AdjustmentException(e);
         } finally {
             temporary.remove();
         }

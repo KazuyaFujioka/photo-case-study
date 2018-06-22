@@ -16,7 +16,7 @@ import spock.lang.Specification
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
 
-@SpringBootTest(properties= "haarcascades.debugging=true")
+@SpringBootTest(properties= "haarcascades.debugging=false")
 class PhotoCaseStudySpec extends Specification {
 
     @Autowired
@@ -67,6 +67,6 @@ class PhotoCaseStudySpec extends Specification {
         AdjustmentResponse response = adjustmentService.resize(request)
 
         expect:
-        response.status.name() == 'success'
+        response.adjustmentImage() != null
     }
 }

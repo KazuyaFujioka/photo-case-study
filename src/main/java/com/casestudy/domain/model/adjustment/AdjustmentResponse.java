@@ -1,27 +1,19 @@
 package com.casestudy.domain.model.adjustment;
 
+import com.casestudy.domain.fundamental.Photo;
+
 import java.awt.image.BufferedImage;
 
 public class AdjustmentResponse {
 
-    BufferedImage adjustmentImage;
-    AdjustmentStatus status;
+    Photo adjustment;
 
-    public AdjustmentResponse(BufferedImage adjustmentImage, AdjustmentStatus status) {
-        this.adjustmentImage = adjustmentImage;
-        this.status = status;
-    }
-
-    public boolean isFailed() {
-        return status.isFailed();
+    public AdjustmentResponse(Photo adjustment) {
+        this.adjustment = adjustment;
     }
 
     public BufferedImage adjustmentImage() {
-        return adjustmentImage;
-    }
-
-    public AdjustmentResponse(AdjustmentStatus status) {
-        this.status = status;
+        return adjustment.bufferedImage();
     }
 
     AdjustmentResponse() {
